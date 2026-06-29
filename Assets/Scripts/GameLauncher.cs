@@ -49,6 +49,17 @@ public class GameLauncher : MonoBehaviour
 
         // 5. 로딩 화면 끄고 런처 종료
         loadingScreen.SetActive(false);
+
+        // 어떤 게임을 플레이했는지 이름 저장
+        PlayerPrefs.SetString("pendingGame", gameName);
+        PlayerPrefs.Save();
+
         Application.Quit();
     }
+
+    public void LaunchByName(string gameName)
+{
+    StartCoroutine(LaunchGame(gameName));
+}
+
 }

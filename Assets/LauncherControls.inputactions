@@ -1,0 +1,57 @@
+{
+    "version": 1,
+    "name": "LauncherControls",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "36f63fe0-6d76-4d2f-96dc-37887bb65454",
+            "actions": [
+                {
+                    "name": "DesktopOut",
+                    "type": "Button",
+                    "id": "1d8fde33-aea5-4283-b499-1921a34f19a3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "aa2ad4a8-ffbb-4139-90f4-52c20e4eb706",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DesktopOut",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b285fd06-a2ee-4f70-b9f6-bcd0f95b9452",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DesktopOut",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f398eb05-9289-40d2-b833-81df6e3021f6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DesktopOut",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
