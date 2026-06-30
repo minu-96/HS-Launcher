@@ -8,15 +8,17 @@ public class StartScreen : MonoBehaviour
     public float slideDuration = 0.5f;
     private bool isSliding = false;
 
-    [Header("팝업 (처음 한 번만)")]
-    public UIPanel notifyPopup;        // 화면에 잠깐 뜨는 팝업
-    public float popupStayTime = 2f;   // 떠있는 시간
-    private bool popupShown = false;
+    [Header("시작 알림 (처음 한 번만)")]
+    public NotifyManager notifyManager;
+    public NotifyData welcomeNotify;   // 시작 시 띄울 알림 에셋
+    private bool notifyShown = false;
 
     public void OnDesktopOut(InputAction.CallbackContext context)
     {
         if (context.performed && !isSliding)
+        {
             StartCoroutine(SlideOut());
+        }
     }
 
     IEnumerator SlideOut()
@@ -32,20 +34,13 @@ public class StartScreen : MonoBehaviour
         startPanel.alpha = 0f;
         startPanel.gameObject.SetActive(false);
 
-        if (!popupShown)
+        // 처음 넘어갈 때만 시작 알림 띄우기
+        if (!notifyShown)
         {
-            popupShown = true;
-            StartCoroutine(PopupSequence());
+            notifyShown = true;
+            if (notifyManager != null && welcomeNotify != null)
+                notifyManager.ShowNotify(welcomeNotify);
         }
-    }
-
-    IEnumerator PopupSequence()
-    {
-        if (notifyPopup == null) yield break;
-
-        notifyPopup.SlideInRight();              // 우측에서 등장
-        yield return new WaitForSeconds(popupStayTime);  // 2초 대기
-        notifyPopup.SlideOutRight();             // 우측으로 사라짐
     }
 
     public void OnDesktop()
