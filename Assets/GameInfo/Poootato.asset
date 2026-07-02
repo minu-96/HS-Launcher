@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4589b5272fe64f2fb0b29cacdf94fa7, type: 3}
+  m_Name: Poootato
+  m_EditorClassIdentifier: Assembly-CSharp::GameInfo
+  gameName: Poootato
+  icon: {fileID: 8835174538924980352, guid: b004ebdb96040406d8d6ab0dfc38c0b4, type: 3}
+  descriptionImage: {fileID: -4528008487114477099, guid: fe1880eeaf6504095ac302457fbfdcbe, type: 3}
+  barImage: {fileID: 7392342123891099610, guid: 127480702e7744c0f83af6b409471d1e, type: 3}

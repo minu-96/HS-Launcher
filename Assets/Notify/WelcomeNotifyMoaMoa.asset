@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 574ff5c954b974020839a506c6ce588f, type: 3}
-  m_Name: WelcomeNotify
+  m_Name: WelcomeNotifyMoaMoa
   m_EditorClassIdentifier: Assembly-CSharp::NotifyData
-  icon: {fileID: 4130640169021434097, guid: 0cc74193e2e70424692793969af8e255, type: 3}
-  message: "\"tato.exe\uC5D0 \uC624\uC2E0 \uAC78 \uD658\uC601\uD569\uB2C8\uB2E4\"
-    \n\uCCAB\uBC88\uC9F8 \uAC8C\uC784\uC744 \uB2E4\uC6B4\uB85C\uB4DC \uD558\uC138\uC694!"
+  icon: {fileID: -8203373600034372610, guid: 2759fb12e83654a5586e184c939fb478, type: 3}
+  message: "MoaMoa \uAC8C\uC784\uC744 \uB2E4\uC6B4\uB85C\uB4DC \uD558\uC138\uC694!"
   action: 1
-  gameName: Game3
-  gameIconSprite: {fileID: 8420994399391746316, guid: 1d824b3125dc34ba5893e5da0f01e232, type: 3}
+  gameName: MoaMoa
+  gameIconSprite: {fileID: -1998173200265154188, guid: 7779d088dee0942a4b7d966c754a6e88, type: 3}

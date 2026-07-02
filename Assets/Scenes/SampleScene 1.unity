@@ -1049,6 +1049,18 @@ MonoBehaviour:
     m_ActionName: 'Player/Sprint[/Keyboard/leftShift]'
   - m_PersistentCalls:
       m_Calls: []
+    m_ActionId: b4f3a469-4bcf-4ee5-9efa-884f4504a798
+    m_ActionName: 'Player/DesktopOut[/Keyboard/space,/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
+    m_ActionName: 'UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
+    m_ActionName: 'UI/Submit[/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls: []
     m_ActionId: 15cef263-9014-4fd5-94d9-4e4a6234a6ef
     m_ActionName: 'UI/Cancel[/Keyboard/escape]'
   - m_PersistentCalls:
@@ -1079,30 +1091,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 16634b0b-c265-406a-a03c-a2cc5f8dc31f
-    m_ActionName: 'Player/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 45af31f4-85e9-4d6b-a536-76d94b3d0bf1
-    m_ActionName: 'Player/Submit[/Keyboard/enter]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1278356627}
-        m_TargetAssemblyTypeName: StartScreen, Assembly-CSharp
-        m_MethodName: OnDesktopOut
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: ac51fb9b-9a7b-4b01-a418-fe1c80940185
-    m_ActionName: 'Player/DesktopOut[/Keyboard/space,/Keyboard/enter,/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1122,6 +1110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StartScreen
   startPanel: {fileID: 1349518726}
   slideDuration: 0.5
+  notifyManager: {fileID: 0}
+  welcomeNotify: {fileID: 0}
 --- !u!1 &1289198556
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,14 +5,24 @@ public class GameIconButton : MonoBehaviour
 {
     public Button launchButton;
     public Image iconImage;
+    public Image descriptionImage;  // 설명 이미지 (GameButton이 hover로 켜고 끔)
+    public Image barImage;          // 작은 바 이미지
 
     private string gameName;
 
-    // 생성될 때 어떤 게임인지 설정받음
-    public void Setup(string name, Sprite icon)
+    // 게임 정보(DB)로 아이콘/설명/바를 채움
+    public void Setup(string name, GameInfo info)
     {
         gameName = name;
-        if (iconImage != null) iconImage.sprite = icon;
+
+        if (info != null)
+        {
+            if (iconImage != null && info.icon != null) iconImage.sprite = info.icon;
+            if (descriptionImage != null && info.descriptionImage != null)
+                descriptionImage.sprite = info.descriptionImage;
+            if (barImage != null && info.barImage != null)
+                barImage.sprite = info.barImage;
+        }
 
         // 버튼 클릭 시 게임 실행 연결 (코드로)
         launchButton.onClick.AddListener(OnClick);

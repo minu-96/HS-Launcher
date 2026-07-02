@@ -10,9 +10,9 @@ public class GameLauncher : MonoBehaviour
 
     private Process currentGameProcess;
 
-    public void OnGame1ButtonClick() => StartCoroutine(LaunchGame("Game1"));
-    public void OnGame2ButtonClick() => StartCoroutine(LaunchGame("Game2"));
-    public void OnGame3ButtonClick() => StartCoroutine(LaunchGame("Game3"));
+    public void OnGame1ButtonClick() => StartCoroutine(LaunchGame("MoaMoa"));
+    public void OnGame2ButtonClick() => StartCoroutine(LaunchGame("ThePotato"));
+    public void OnGame3ButtonClick() => StartCoroutine(LaunchGame("Poootato"));
 
     IEnumerator LaunchGame(string gameName)
     {

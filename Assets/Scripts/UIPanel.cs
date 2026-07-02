@@ -9,6 +9,9 @@ public class UIPanel : MonoBehaviour
     public float duration = 0.2f;
     public float slideDistance = 500f;
 
+    [Header("배타 열기")]
+    public bool exclusive = false; // 켜면 이 패널이 열릴 때 다른 배타 패널은 자동으로 닫힘 (옵션창/알림창 등)
+
     private CanvasGroup cg;
     private RectTransform rect;
     private Coroutine current;
@@ -16,6 +19,9 @@ public class UIPanel : MonoBehaviour
     private bool initialized = false;
 
     private bool isOpen = false;   // 패널이 열려있는지 자체 관리
+
+    // 현재 열려있는 배타 패널 (한 번에 하나만)
+    private static UIPanel openExclusive;
 
     void Awake()
 {
@@ -32,25 +38,51 @@ public class UIPanel : MonoBehaviour
         initialized = true;
     }
 
+    // ---------- 배타 열기/닫기 관리 ----------
+    void NotifyOpen()
+    {
+        if (!exclusive) return;
+        if (openExclusive != null && openExclusive != this)
+            openExclusive.ForceClose();
+        openExclusive = this;
+    }
+
+    void NotifyClose()
+    {
+        if (openExclusive == this) openExclusive = null;
+    }
+
+    // 다른 배타 패널이 열릴 때 이 패널을 즉시 닫고 다음 등장을 위해 초기 상태로 복구
+    public void ForceClose()
+    {
+        if (!isOpen) return;
+        isOpen = false;
+        EnsureInit();
+        if (current != null) StopCoroutine(current);
+        gameObject.SetActive(false);
+        rect.anchoredPosition = homePos;
+        cg.alpha = 1f;
+    }
+
     // ---------- 페이드 ----------
-    public void FadeIn()  { EnsureInit(); gameObject.SetActive(true); Run(FadeRoutine(1f, true)); }
-    public void FadeOut() { EnsureInit(); Run(FadeRoutine(0f, false)); }
+    public void FadeIn()  { EnsureInit(); NotifyOpen(); gameObject.SetActive(true); Run(FadeRoutine(1f, true)); }
+    public void FadeOut() { EnsureInit(); NotifyClose(); Run(FadeRoutine(0f, false)); }
 
     // ---------- 슬라이드 인 ----------
-    public void SlideInLeft()  { EnsureInit(); gameObject.SetActive(true); Run(SlideInRoutine(new Vector2(-slideDistance, 0))); }
-    public void SlideInRight() { EnsureInit(); gameObject.SetActive(true); Run(SlideInRoutine(new Vector2(slideDistance, 0))); }
-    public void SlideInUp()    { EnsureInit(); gameObject.SetActive(true); Run(SlideInRoutine(new Vector2(0, slideDistance))); }
-    public void SlideInDown()  { EnsureInit(); gameObject.SetActive(true); Run(SlideInRoutine(new Vector2(0, -slideDistance))); }
+    public void SlideInLeft()  { EnsureInit(); NotifyOpen(); gameObject.SetActive(true); Run(SlideInRoutine(new Vector2(-slideDistance, 0))); }
+    public void SlideInRight() { EnsureInit(); NotifyOpen(); gameObject.SetActive(true); Run(SlideInRoutine(new Vector2(slideDistance, 0))); }
+    public void SlideInUp()    { EnsureInit(); NotifyOpen(); gameObject.SetActive(true); Run(SlideInRoutine(new Vector2(0, slideDistance))); }
+    public void SlideInDown()  { EnsureInit(); NotifyOpen(); gameObject.SetActive(true); Run(SlideInRoutine(new Vector2(0, -slideDistance))); }
 
     // ---------- 슬라이드 아웃 ----------
-    public void SlideOutLeft()  { EnsureInit(); Run(SlideOutRoutine(new Vector2(-slideDistance, 0))); }
-    public void SlideOutRight() { EnsureInit(); Run(SlideOutRoutine(new Vector2(slideDistance, 0))); }
-    public void SlideOutUp()    { EnsureInit(); Run(SlideOutRoutine(new Vector2(0, slideDistance))); }
-    public void SlideOutDown()  { EnsureInit(); Run(SlideOutRoutine(new Vector2(0, -slideDistance))); }
+    public void SlideOutLeft()  { EnsureInit(); NotifyClose(); Run(SlideOutRoutine(new Vector2(-slideDistance, 0))); }
+    public void SlideOutRight() { EnsureInit(); NotifyClose(); Run(SlideOutRoutine(new Vector2(slideDistance, 0))); }
+    public void SlideOutUp()    { EnsureInit(); NotifyClose(); Run(SlideOutRoutine(new Vector2(0, slideDistance))); }
+    public void SlideOutDown()  { EnsureInit(); NotifyClose(); Run(SlideOutRoutine(new Vector2(0, -slideDistance))); }
 
     // ---------- 단순 표시/숨김 ----------
-    public void Show() { EnsureInit(); gameObject.SetActive(true); cg.alpha = 1f; }
-    public void Hide() { gameObject.SetActive(false); }
+    public void Show() { EnsureInit(); NotifyOpen(); isOpen = true; gameObject.SetActive(true); cg.alpha = 1f; }
+    public void Hide() { NotifyClose(); isOpen = false; gameObject.SetActive(false); }
 
     // ---------- 토글 (같은 쪽으로 들어오고 나감) ----------
     // ---------- 토글 (자체 플래그로 판정) ----------

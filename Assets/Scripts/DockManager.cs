@@ -7,23 +7,79 @@ public class DockManager : MonoBehaviour
     public GameObject iconPrefab;     // GameIcon 프리팹
     public Transform dockContainer;   // 독바 (Horizontal Layout Group)
 
+    [Header("게임 정보 DB (아이콘/설명/바 이미지)")]
+    public GameDatabase gameDatabase; // gameName으로 게임 정보를 조회
+
     [Header("점프 애니메이션")]
     public float jumpHeight = 80f;
     public float jumpDuration = 0.25f;
     public int jumpCount = 3;          // 튀는 횟수
 
-    // 팝업 버튼이 호출할 함수
-    public void AddIcon(string gameName, Sprite icon)
+    const string DockKey = "launcher_dockIcons"; // 저장된 아이콘 목록 (CSV)
+
+    void Start()
+    {
+        RestoreSavedIcons();
+    }
+
+    // 저장된 아이콘들을 복원 (애니메이션 없이)
+    void RestoreSavedIcons()
+    {
+        string saved = PlayerPrefs.GetString(DockKey, "");
+        if (string.IsNullOrEmpty(saved)) return;
+
+        foreach (string name in saved.Split(','))
+        {
+            if (string.IsNullOrEmpty(name)) continue;
+            CreateIcon(name, false);
+        }
+    }
+
+    // 팝업 버튼이 호출할 함수 (새로 추가 → 저장 + 애니메이션)
+    public void AddIcon(string gameName)
+    {
+        if (IsSaved(gameName)) return;   // 이미 있으면 중복 생성 안 함
+        SaveIcon(gameName);
+        CreateIcon(gameName, true);
+    }
+
+    // 실제 아이콘 오브젝트 생성 (공통) — 아이콘/설명/바는 DB에서 조회해 채움
+    void CreateIcon(string gameName, bool animate)
     {
         GameObject newIcon = Instantiate(iconPrefab, dockContainer);
 
-        // 프리팹 버튼을 코드로 연결
+        GameInfo info = (gameDatabase != null) ? gameDatabase.Get(gameName) : null;
+
         GameIconButton iconBtn = newIcon.GetComponent<GameIconButton>();
         if (iconBtn != null)
-            iconBtn.Setup(gameName, icon);
+            iconBtn.Setup(gameName, info);
 
-        // 점프 애니메이션 시작
-        StartCoroutine(JumpAnimation(newIcon.GetComponent<RectTransform>()));
+        if (animate)
+            StartCoroutine(JumpAnimation(newIcon.GetComponent<RectTransform>()));
+    }
+
+    // ---------------- 저장 ----------------
+    bool IsSaved(string gameName)
+    {
+        string saved = PlayerPrefs.GetString(DockKey, "");
+        return ("," + saved + ",").Contains("," + gameName + ",");
+    }
+
+    void SaveIcon(string gameName)
+    {
+        string saved = PlayerPrefs.GetString(DockKey, "");
+        saved = string.IsNullOrEmpty(saved) ? gameName : saved + "," + gameName;
+        PlayerPrefs.SetString(DockKey, saved);
+        PlayerPrefs.Save();
+    }
+
+    // 전시 리셋용: 저장 + 화면 아이콘 모두 제거
+    public void ClearAllIcons()
+    {
+        PlayerPrefs.DeleteKey(DockKey);
+        PlayerPrefs.Save();
+        foreach (Transform child in dockContainer)
+            Destroy(child.gameObject);
     }
 
     IEnumerator JumpAnimation(RectTransform rect)
@@ -59,5 +115,4 @@ public class DockManager : MonoBehaviour
         }
         rect.anchoredPosition = basePos;
     }
-
 }
